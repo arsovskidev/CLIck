@@ -7,7 +7,7 @@ from rich.table import Table
 from rich.text import Text
 from rich import box
 
-from models import Task, Priority
+from .models import Task, Priority
 
 
 console = Console()

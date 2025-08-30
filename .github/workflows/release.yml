@@ -39,9 +39,9 @@ jobs:
       run: |
         python -m pytest tests/ -v
 
-    - name: Build executable
+    - name: Build executable with PyInstaller
       run: |
-        pyinstaller --onefile --name click main.py --clean
+        pyinstaller --onefile --name click main.py
 
     - name: Test executable
       run: |

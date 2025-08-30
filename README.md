@@ -168,7 +168,7 @@ mypy src/
 
 ```bash
 pip install pyinstaller
-pyinstaller --onefile --name click src/cli.py
+pyinstaller --onefile --name click main.py
 ```
 
 ## Requirements
