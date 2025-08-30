@@ -1,5 +1,7 @@
 # CLIck - Command-Line Task Manager
 
+[![CI/CD Pipeline](https://github.com/arsovskidev/CLIck/actions/workflows/ci.yml/badge.svg)](https://github.com/arsovskidev/CLIck/actions/workflows/ci.yml)
+
 A beautiful and intuitive command-line task manager built with Python.
 
 ## Features
