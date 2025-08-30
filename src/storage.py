@@ -54,7 +54,11 @@ class TaskStorage:
                     task.description,
                     task.priority.value,
                     task.completed,
-                    task.created_at.isoformat() if task.created_at else datetime.now().isoformat(),
+                    (
+                        task.created_at.isoformat()
+                        if task.created_at
+                        else datetime.now().isoformat()
+                    ),
                     task.due_date.isoformat() if task.due_date else None,
                     ",".join(task.tags) if task.tags else "",
                 ),

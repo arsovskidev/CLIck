@@ -28,7 +28,9 @@ def cli() -> None:
     help="Task priority",
 )
 @click.option("--tags", help="Comma-separated tags")
-def add(description: str, due: Optional[str], priority: str, tags: Optional[str]) -> None:
+def add(
+    description: str, due: Optional[str], priority: str, tags: Optional[str]
+) -> None:
     """Add a new task"""
     storage = TaskStorage()
 
@@ -55,7 +57,9 @@ def add(description: str, due: Optional[str], priority: str, tags: Optional[str]
 @click.option("--due", help="Filter by due date")
 @click.option("--tags", help="Filter by tags (comma-separated)")
 @click.option("--completed", is_flag=True, help="Show completed tasks")
-def list(priority: Optional[str], due: Optional[str], tags: Optional[str], completed: bool) -> None:
+def list(
+    priority: Optional[str], due: Optional[str], tags: Optional[str], completed: bool
+) -> None:
     """List tasks"""
     storage = TaskStorage()
     tasks = storage.get_tasks(

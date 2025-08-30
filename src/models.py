@@ -19,6 +19,7 @@ class Priority(Enum):
 @dataclass
 class Task:
     """Task data model"""
+
     description: str
     priority: Priority = Priority.MEDIUM
     completed: bool = False
@@ -26,7 +27,7 @@ class Task:
     due_date: Optional[datetime] = None
     tags: Optional[List[str]] = None
     id: Optional[int] = None
-    
+
     def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now()
@@ -47,7 +48,11 @@ class Task:
             "description": self.description,
             "priority": self.priority.value,
             "completed": self.completed,
-            "created_at": self.created_at.isoformat() if self.created_at else datetime.now().isoformat(),
+            "created_at": (
+                self.created_at.isoformat()
+                if self.created_at
+                else datetime.now().isoformat()
+            ),
             "due_date": self.due_date.isoformat() if self.due_date else None,
             "tags": ",".join(self.tags) if self.tags else "",
         }
