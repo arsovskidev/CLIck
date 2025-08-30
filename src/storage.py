@@ -111,6 +111,18 @@ class TaskStorage:
             conn.commit()
             return cursor.rowcount > 0
 
+    def complete_all_tasks(self) -> int:
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.execute("UPDATE tasks SET completed = 1 WHERE completed = 0")
+            conn.commit()
+            return cursor.rowcount
+
+    def delete_all_tasks(self) -> int:
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.execute("DELETE FROM tasks")
+            conn.commit()
+            return cursor.rowcount
+
     def get_task_by_id(self, task_id: int) -> Optional[Task]:
         with sqlite3.connect(self.db_path) as conn:
             conn.row_factory = sqlite3.Row
