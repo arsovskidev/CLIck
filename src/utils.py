@@ -20,42 +20,54 @@ def parse_date(date_str: str) -> Optional[datetime]:
     """Parse various date formats into datetime objects"""
     if not date_str:
         return None
-    
+
     date_str = date_str.lower().strip()
     now = datetime.now()
-    
+
     # Handle relative dates
-    if date_str == 'today':
+    if date_str == "today":
         return now.replace(hour=23, minute=59, second=59, microsecond=0)
-    elif date_str == 'tomorrow':
-        return (now + timedelta(days=1)).replace(hour=23, minute=59, second=59, microsecond=0)
-    elif date_str == 'yesterday':
-        return (now - timedelta(days=1)).replace(hour=23, minute=59, second=59, microsecond=0)
-    
+    elif date_str == "tomorrow":
+        return (now + timedelta(days=1)).replace(
+            hour=23, minute=59, second=59, microsecond=0
+        )
+    elif date_str == "yesterday":
+        return (now - timedelta(days=1)).replace(
+            hour=23, minute=59, second=59, microsecond=0
+        )
+
     # Handle "in X days" format
-    days_match = re.match(r'in (\d+) days?', date_str)
+    days_match = re.match(r"in (\d+) days?", date_str)
     if days_match:
         days = int(days_match.group(1))
-        return (now + timedelta(days=days)).replace(hour=23, minute=59, second=59, microsecond=0)
-    
+        return (now + timedelta(days=days)).replace(
+            hour=23, minute=59, second=59, microsecond=0
+        )
+
     # Handle ISO date format (YYYY-MM-DD)
     try:
-        return datetime.strptime(date_str, '%Y-%m-%d').replace(hour=23, minute=59, second=59, microsecond=0)
+        return datetime.strptime(date_str, "%Y-%m-%d").replace(
+            hour=23, minute=59, second=59, microsecond=0
+        )
     except ValueError:
         pass
-    
+
     # Handle MM/DD/YYYY format
     try:
-        return datetime.strptime(date_str, '%m/%d/%Y').replace(hour=23, minute=59, second=59, microsecond=0)
+        return datetime.strptime(date_str, "%m/%d/%Y").replace(
+            hour=23, minute=59, second=59, microsecond=0
+        )
     except ValueError:
         pass
-    
+
     # Handle DD-MM-YYYY format
     try:
-        return datetime.strptime(date_str, '%d-%m-%Y').replace(hour=23, minute=59, second=59, microsecond=0)
+        return datetime.strptime(date_str, "%d-%m-%Y").replace(
+            hour=23, minute=59, second=59, microsecond=0
+        )
     except ValueError:
         pass
-    
+
     return None
 
 
@@ -64,7 +76,7 @@ def format_task_list(tasks: List[Task]) -> None:
     if not tasks:
         console.print("📝 No tasks found", style="dim")
         return
-    
+
     table = Table(show_header=True, header_style="bold magenta")
     table.add_column("ID", style="dim", width=4)
     table.add_column("Status", width=8)
@@ -72,7 +84,7 @@ def format_task_list(tasks: List[Task]) -> None:
     table.add_column("Description", min_width=20)
     table.add_column("Due Date", width=12)
     table.add_column("Tags", width=15)
-    
+
     for task in tasks:
         # Status column
         if task.completed:
@@ -81,15 +93,17 @@ def format_task_list(tasks: List[Task]) -> None:
             status = Text("⚠️  Late", style="red")
         else:
             status = Text("📋 Todo", style="yellow")
-        
+
         # Priority column with colors
         priority_colors = {
             Priority.HIGH: "red",
             Priority.MEDIUM: "yellow",
-            Priority.LOW: "green"
+            Priority.LOW: "green",
         }
-        priority_text = Text(task.priority.value.title(), style=priority_colors[task.priority])
-        
+        priority_text = Text(
+            task.priority.value.title(), style=priority_colors[task.priority]
+        )
+
         # Due date formatting
         due_date_str = ""
         if task.due_date:
@@ -99,30 +113,26 @@ def format_task_list(tasks: List[Task]) -> None:
                 due_date_str = "Tomorrow"
             else:
                 due_date_str = task.due_date.strftime("%Y-%m-%d")
-        
+
         # Tags formatting
         tags_str = ", ".join(task.tags) if task.tags else ""
-        
+
         table.add_row(
             str(task.id),
             status,
             priority_text,
             task.description,
             due_date_str,
-            tags_str
+            tags_str,
         )
-    
+
     console.print(table)
     console.print(f"\n📊 Total: {len(tasks)} tasks")
 
 
 def format_priority_color(priority: Priority) -> str:
     """Get color code for priority"""
-    colors = {
-        Priority.HIGH: "red",
-        Priority.MEDIUM: "yellow", 
-        Priority.LOW: "green"
-    }
+    colors = {Priority.HIGH: "red", Priority.MEDIUM: "yellow", Priority.LOW: "green"}
     return colors.get(priority, "white")
 
 

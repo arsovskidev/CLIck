@@ -12,7 +12,7 @@ def test_parse_date_relative():
     """Test parsing relative dates"""
     today = parse_date("today")
     assert today.date() == datetime.now().date()
-    
+
     tomorrow = parse_date("tomorrow")
     expected_tomorrow = (datetime.now() + timedelta(days=1)).date()
     assert tomorrow.date() == expected_tomorrow

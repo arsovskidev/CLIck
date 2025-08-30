@@ -28,7 +28,7 @@ def test_task_is_overdue():
     past_date = datetime(2020, 1, 1)
     task = Task(description="Overdue task", due_date=past_date)
     assert task.is_overdue is True
-    
+
     # Completed tasks are never overdue
     task.completed = True
     assert task.is_overdue is False
@@ -37,30 +37,28 @@ def test_task_is_overdue():
 def test_task_to_dict():
     """Test task serialization to dictionary"""
     task = Task(
-        description="Test task",
-        priority=Priority.HIGH,
-        tags=["work", "urgent"]
+        description="Test task", priority=Priority.HIGH, tags=["work", "urgent"]
     )
     task.id = 1
-    
+
     data = task.to_dict()
-    assert data['description'] == "Test task"
-    assert data['priority'] == "high"
-    assert data['tags'] == "work,urgent"
+    assert data["description"] == "Test task"
+    assert data["priority"] == "high"
+    assert data["tags"] == "work,urgent"
 
 
 def test_task_from_dict():
     """Test task deserialization from dictionary"""
     data = {
-        'id': 1,
-        'description': "Test task",
-        'priority': "high",
-        'completed': False,
-        'created_at': datetime.now().isoformat(),
-        'due_date': None,
-        'tags': "work,urgent"
+        "id": 1,
+        "description": "Test task",
+        "priority": "high",
+        "completed": False,
+        "created_at": datetime.now().isoformat(),
+        "due_date": None,
+        "tags": "work,urgent",
     }
-    
+
     task = Task.from_dict(data)
     assert task.description == "Test task"
     assert task.priority == Priority.HIGH
