@@ -8,6 +8,11 @@ on:
       - 'docs/**'
       - '.gitignore'
 
+permissions:
+  contents: write
+  packages: write
+  pull-requests: read
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -114,18 +119,13 @@ jobs:
         cat CHANGELOG_TEMP.md >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
 
-    - name: Commit version updates
+    - name: Update version in files
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add pyproject.toml src/__init__.py
-        git commit -m "chore: bump version to ${{ steps.version.outputs.version }} [skip ci]" || exit 0
-
-    - name: Create and push tag
-      run: |
-        git tag ${{ steps.version.outputs.version }}
-        git push origin ${{ steps.version.outputs.version }}
-        git push origin HEAD:${{ github.ref_name }}
+        # Update version in pyproject.toml
+        sed -i 's/version = ".*"/version = "${{ steps.version.outputs.version }}"/' pyproject.toml
+        
+        # Update version in src/__init__.py  
+        sed -i 's/__version__ = ".*"/__version__ = "${{ steps.version.outputs.version }}"/' src/__init__.py
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1

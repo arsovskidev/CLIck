@@ -93,8 +93,13 @@ The project uses automated releases triggered by commits to the master branch:
 
 ### Manual Release
 
-Use the release script for controlled releases:
+**Option 1: GitHub UI (Recommended)**
+1. Go to: https://github.com/arsovskidev/CLIck/actions/workflows/release-manual.yml
+2. Click "Run workflow"
+3. Enter version (e.g., v1.0.0) and select release type
+4. Click "Run workflow"
 
+**Option 2: Local script**
 ```bash
 # Create a patch release (default)
 ./scripts/release.sh

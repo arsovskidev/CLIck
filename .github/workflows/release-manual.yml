@@ -1,0 +1,95 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., v1.0.0)'
+        required: true
+        type: string
+      release_type:
+        description: 'Release type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+        - patch
+        - minor
+        - major
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: Run tests
+      run: |
+        python -m pytest tests/ -v
+
+    - name: Run quality checks
+      run: |
+        black --check src/ tests/
+        mypy src/ --ignore-missing-imports
+
+    - name: Build executable
+      run: |
+        pyinstaller --onefile --name click main.py --clean
+
+    - name: Test executable
+      run: |
+        ./dist/click --help
+
+    - name: Generate changelog
+      id: changelog
+      run: |
+        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+        
+        if [ -z "$LATEST_TAG" ]; then
+          CHANGELOG=$(git log --oneline --pretty=format:"- %s" | head -20)
+        else
+          CHANGELOG=$(git log ${LATEST_TAG}..HEAD --oneline --pretty=format:"- %s")
+        fi
+        
+        cat > CHANGELOG_TEMP.md << EOF
+        ## What's Changed
+        
+        $CHANGELOG
+        
+        **Full Changelog**: https://github.com/${{ github.repository }}/compare/${LATEST_TAG}...${{ inputs.version }}
+        EOF
+        
+        echo "changelog<<EOF" >> $GITHUB_OUTPUT
+        cat CHANGELOG_TEMP.md >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ inputs.version }}
+        name: Release ${{ inputs.version }}
+        body: ${{ steps.changelog.outputs.changelog }}
+        files: |
+          ./dist/click
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
