@@ -13,7 +13,7 @@ from .utils import format_task_list, parse_date
 
 @click.group()
 @click.version_option(version="0.1.0", prog_name="click")
-def cli():
+def cli() -> None:
     """CLIck - A beautiful command-line task manager"""
     pass
 
@@ -28,7 +28,7 @@ def cli():
     help="Task priority",
 )
 @click.option("--tags", help="Comma-separated tags")
-def add(description: str, due: Optional[str], priority: str, tags: Optional[str]):
+def add(description: str, due: Optional[str], priority: str, tags: Optional[str]) -> None:
     """Add a new task"""
     storage = TaskStorage()
 
@@ -55,9 +55,7 @@ def add(description: str, due: Optional[str], priority: str, tags: Optional[str]
 @click.option("--due", help="Filter by due date")
 @click.option("--tags", help="Filter by tags (comma-separated)")
 @click.option("--completed", is_flag=True, help="Show completed tasks")
-def list(
-    priority: Optional[str], due: Optional[str], tags: Optional[str], completed: bool
-):
+def list(priority: Optional[str], due: Optional[str], tags: Optional[str], completed: bool) -> None:
     """List tasks"""
     storage = TaskStorage()
     tasks = storage.get_tasks(
@@ -76,7 +74,7 @@ def list(
 
 @cli.command()
 @click.argument("task_id", type=int)
-def complete(task_id: int):
+def complete(task_id: int) -> None:
     """Mark a task as complete"""
     storage = TaskStorage()
     if storage.complete_task(task_id):
@@ -87,7 +85,7 @@ def complete(task_id: int):
 
 @cli.command()
 @click.argument("task_id", type=int)
-def delete(task_id: int):
+def delete(task_id: int) -> None:
     """Delete a task"""
     storage = TaskStorage()
     if storage.delete_task(task_id):

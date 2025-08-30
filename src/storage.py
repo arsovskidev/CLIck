@@ -24,7 +24,7 @@ class TaskStorage:
 
         self._init_database()
 
-    def _init_database(self):
+    def _init_database(self) -> None:
         """Initialize the database with required tables"""
         with sqlite3.connect(self.db_path) as conn:
             conn.execute(
@@ -54,13 +54,13 @@ class TaskStorage:
                     task.description,
                     task.priority.value,
                     task.completed,
-                    task.created_at.isoformat(),
+                    task.created_at.isoformat() if task.created_at else datetime.now().isoformat(),
                     task.due_date.isoformat() if task.due_date else None,
                     ",".join(task.tags) if task.tags else "",
                 ),
             )
             conn.commit()
-            return cursor.lastrowid
+            return cursor.lastrowid or 0
 
     def get_tasks(
         self,
@@ -71,7 +71,7 @@ class TaskStorage:
     ) -> List[Task]:
         """Get tasks with optional filtering"""
         query = "SELECT * FROM tasks WHERE completed = ?"
-        params = [completed]
+        params: List[str] = [str(int(completed))]
 
         if priority:
             query += " AND priority = ?"
