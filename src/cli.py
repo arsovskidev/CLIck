@@ -2,11 +2,11 @@ import click
 
 from .commands import (
     add_task,
-    list_tasks, 
+    list_tasks,
     complete_task,
     delete_task,
     complete_all_tasks,
-    delete_all_tasks
+    delete_all_tasks,
 )
 
 
