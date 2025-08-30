@@ -1,10 +1,14 @@
 import click
 from typing import Optional
 from datetime import datetime
+import sys
+import os
 
-from .storage import TaskStorage
-from .models import Task, Priority
-from .utils import format_task_list, parse_date
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from storage import TaskStorage
+from models import Task, Priority
+from utils import format_task_list, parse_date
 
 
 @click.group()

@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import List, Optional
 from datetime import datetime
 
-from .models import Task, Priority
+from models import Task, Priority
 
 
 class TaskStorage:

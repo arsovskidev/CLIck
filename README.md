@@ -5,7 +5,7 @@
 [![Latest Release](https://img.shields.io/github/v/release/arsovskidev/CLIck)](https://github.com/arsovskidev/CLIck/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/arsovskidev/CLIck/total)](https://github.com/arsovskidev/CLIck/releases)
 
-A beautiful and intuitive command-line task manager built with Python.
+A lightning-fast, terminal-based task manager for developers who live in the command line. Create, organize, and track tasks without leaving your terminal.
 
 ## Features
 
@@ -93,34 +93,6 @@ The project uses automated releases triggered by commits to the master branch:
 - **Patch release** (v1.0.1): Bug fixes and small improvements
 - **Minor release** (v1.1.0): New features (use `feat:` in commit message)
 - **Major release** (v2.0.0): Breaking changes (use `feat!:` or `BREAKING CHANGE` in commit message)
-
-### Manual Release
-
-**Option 1: GitHub UI (Recommended)**
-1. Go to: https://github.com/arsovskidev/CLIck/actions/workflows/release-manual.yml
-2. Click "Run workflow"
-3. Enter version (e.g., v1.0.0) and select release type
-4. Click "Run workflow"
-
-**Option 2: Local script**
-```bash
-# Create a patch release (default)
-./scripts/release.sh
-
-# Create a minor release
-./scripts/release.sh minor
-
-# Create a major release
-./scripts/release.sh major
-```
-
-### Release Process
-
-1. Tests and quality checks run automatically
-2. Version is bumped based on commit messages
-3. Changelog is generated from commit history
-4. GitHub release is created with executable artifact
-5. Binary is available for download at: https://github.com/arsovskidev/CLIck/releases
 
 ## Usage
 
