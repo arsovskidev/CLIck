@@ -1,19 +1,22 @@
 # CLIck - Command-Line Task Manager
 
 [![CI/CD Pipeline](https://github.com/arsovskidev/CLIck/actions/workflows/ci.yml/badge.svg)](https://github.com/arsovskidev/CLIck/actions/workflows/ci.yml)
+[![Release](https://github.com/arsovskidev/CLIck/actions/workflows/release.yml/badge.svg)](https://github.com/arsovskidev/CLIck/actions/workflows/release.yml)
+[![Latest Release](https://img.shields.io/github/v/release/arsovskidev/CLIck)](https://github.com/arsovskidev/CLIck/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/arsovskidev/CLIck/total)](https://github.com/arsovskidev/CLIck/releases)
 
 A beautiful and intuitive command-line task manager built with Python.
 
 ## Features
 
-- ✅ Add, edit, and delete tasks
-- 🎯 Set priorities (low, medium, high)
-- 📅 Set due dates with flexible date parsing
-- 🏷️ Organize tasks with tags
-- 🔍 Search and filter tasks
-- 💾 Persistent SQLite storage
-- 🌈 Beautiful terminal output with Rich
-- 📊 Task status tracking
+- Add, edit, and delete tasks
+- Set priorities (low, medium, high)
+- Set due dates with flexible date parsing
+- Organize tasks with tags
+- Search and filter tasks
+- Persistent SQLite storage
+- Beautiful terminal output with Rich
+- Task status tracking
 
 ## Installation & Building
 

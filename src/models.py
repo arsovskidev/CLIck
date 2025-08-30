@@ -1,7 +1,3 @@
-"""
-Data models for CLIck task manager
-"""
-
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
@@ -9,8 +5,6 @@ from typing import List, Optional
 
 
 class Priority(Enum):
-    """Task priority levels"""
-
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -18,7 +12,6 @@ class Priority(Enum):
 
 @dataclass
 class Task:
-    """Task data model"""
 
     description: str
     priority: Priority = Priority.MEDIUM
@@ -36,13 +29,11 @@ class Task:
 
     @property
     def is_overdue(self) -> bool:
-        """Check if task is overdue"""
         if self.due_date is None or self.completed:
             return False
         return datetime.now() > self.due_date
 
     def to_dict(self) -> dict:
-        """Convert task to dictionary for storage"""
         return {
             "id": self.id,
             "description": self.description,
@@ -59,7 +50,6 @@ class Task:
 
     @classmethod
     def from_dict(cls, data: dict) -> "Task":
-        """Create task from dictionary"""
         return cls(
             id=data["id"],
             description=data["description"],

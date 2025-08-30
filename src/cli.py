@@ -1,7 +1,3 @@
-"""
-Command-line interface for CLIck task manager
-"""
-
 import click
 from typing import Optional
 from datetime import datetime
@@ -14,7 +10,6 @@ from .utils import format_task_list, parse_date
 @click.group()
 @click.version_option(version="0.1.0", prog_name="click")
 def cli() -> None:
-    """CLIck - A beautiful command-line task manager"""
     pass
 
 
@@ -45,7 +40,7 @@ def add(
     )
 
     task_id = storage.add_task(task)
-    click.echo(f"✅ Task added with ID: {task_id}")
+    click.echo(f"Task added successfully with ID: {task_id}")
 
 
 @cli.command()
@@ -70,7 +65,7 @@ def list(
     )
 
     if not tasks:
-        click.echo("📝 No tasks found")
+        click.echo("No tasks found.")
         return
 
     format_task_list(tasks)
@@ -82,20 +77,19 @@ def complete(task_id: int) -> None:
     """Mark a task as complete"""
     storage = TaskStorage()
     if storage.complete_task(task_id):
-        click.echo(f"✅ Task {task_id} marked as complete")
+        click.echo(f"Task {task_id} marked as completed!")
     else:
-        click.echo(f"❌ Task {task_id} not found")
+        click.echo(f"Task {task_id} not found.")
 
 
 @cli.command()
 @click.argument("task_id", type=int)
 def delete(task_id: int) -> None:
-    """Delete a task"""
     storage = TaskStorage()
     if storage.delete_task(task_id):
-        click.echo(f"🗑️  Task {task_id} deleted")
+        click.echo(f"Task {task_id} deleted successfully!")
     else:
-        click.echo(f"❌ Task {task_id} not found")
+        click.echo(f"Task {task_id} not found.")
 
 
 if __name__ == "__main__":

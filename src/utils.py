@@ -1,7 +1,3 @@
-"""
-Helper functions for CLIck task manager
-"""
-
 from datetime import datetime, timedelta
 from typing import List, Optional
 import re
@@ -9,6 +5,7 @@ import re
 from rich.console import Console
 from rich.table import Table
 from rich.text import Text
+from rich import box
 
 from .models import Task, Priority
 
@@ -17,7 +14,6 @@ console = Console()
 
 
 def parse_date(date_str: str) -> Optional[datetime]:
-    """Parse various date formats into datetime objects"""
     if not date_str:
         return None
 
@@ -72,9 +68,8 @@ def parse_date(date_str: str) -> Optional[datetime]:
 
 
 def format_task_list(tasks: List[Task]) -> None:
-    """Display tasks in a beautiful table format using Rich"""
     if not tasks:
-        console.print("📝 No tasks found", style="dim")
+        console.print("No tasks found", style="dim")
         return
 
     table = Table(show_header=True, header_style="bold magenta")
@@ -88,11 +83,11 @@ def format_task_list(tasks: List[Task]) -> None:
     for task in tasks:
         # Status column
         if task.completed:
-            status = Text("✅ Done", style="green")
+            status = Text("Done", style="green")
         elif task.is_overdue:
-            status = Text("⚠️  Late", style="red")
+            status = Text("Late", style="red")
         else:
-            status = Text("📋 Todo", style="yellow")
+            status = Text("Todo", style="yellow")
 
         # Priority column with colors
         priority_colors = {
@@ -127,17 +122,15 @@ def format_task_list(tasks: List[Task]) -> None:
         )
 
     console.print(table)
-    console.print(f"\n📊 Total: {len(tasks)} tasks")
+    console.print(f"\nTotal: {len(tasks)} tasks")
 
 
 def format_priority_color(priority: Priority) -> str:
-    """Get color code for priority"""
     colors = {Priority.HIGH: "red", Priority.MEDIUM: "yellow", Priority.LOW: "green"}
     return colors.get(priority, "white")
 
 
 def validate_priority(priority_str: str) -> bool:
-    """Validate if priority string is valid"""
     try:
         Priority(priority_str.lower())
         return True
