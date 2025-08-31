@@ -1,4 +1,8 @@
-# CLIck - Command-Line Task Manager
+<div align="center">
+  <img src="docs/logo.svg" alt="CLIck Logo" width="150" height="150">
+  
+  # CLIck - Command-Line Task Manager
+</div>
 
 [![CI/CD Pipeline](https://github.com/arsovskidev/CLIck/actions/workflows/ci.yml/badge.svg)](https://github.com/arsovskidev/CLIck/actions/workflows/ci.yml)
 [![Release](https://github.com/arsovskidev/CLIck/actions/workflows/release.yml/badge.svg)](https://github.com/arsovskidev/CLIck/actions/workflows/release.yml)

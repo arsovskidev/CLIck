@@ -1,0 +1,43 @@
+<svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Terminal window -->
+  <rect x="10" y="10" width="180" height="100" rx="8" fill="#000000" stroke="#333333" stroke-width="1"/>
+  
+  <!-- Terminal header -->
+  <rect x="10" y="10" width="180" height="20" rx="8" fill="#1a1a1a"/>
+  <rect x="10" y="22" width="180" height="8" fill="#1a1a1a"/>
+  
+  <!-- Terminal buttons -->
+  <circle cx="22" cy="20" r="3" fill="#ff5f56"/>
+  <circle cx="34" cy="20" r="3" fill="#ffbd2e"/>
+  <circle cx="46" cy="20" r="3" fill="#27ca3f"/>
+  
+  <!-- Terminal content -->
+  <rect x="15" y="35" width="170" height="70" fill="#000000"/>
+  
+  <!-- Command prompt -->
+  <text x="20" y="50" font-family="monospace" font-size="12" fill="#00ff00">❯</text>
+  <text x="35" y="50" font-family="monospace" font-size="12" fill="#ffffff">click a "Review code"</text>
+  
+  <!-- Task list -->
+  <g transform="translate(20, 60)">
+    <!-- Task 1 -->
+    <rect x="0" y="0" width="3" height="3" fill="#ffffff"/>
+    <text x="8" y="8" font-family="monospace" font-size="10" fill="#ffffff">Review code</text>
+    <text x="120" y="8" font-family="monospace" font-size="8" fill="#ff4757">HIGH</text>
+    
+    <!-- Task 2 -->
+    <rect x="0" y="12" width="3" height="3" fill="#ffffff"/>
+    <text x="8" y="20" font-family="monospace" font-size="10" fill="#ffffff">Deploy app</text>
+    <text x="120" y="20" font-family="monospace" font-size="8" fill="#ffa502">MED</text>
+    
+    <!-- Task 3 (completed) -->
+    <rect x="0" y="24" width="3" height="3" fill="#666666"/>
+    <text x="8" y="32" font-family="monospace" font-size="10" fill="#666666" text-decoration="line-through">Fix tests</text>
+    <text x="120" y="32" font-family="monospace" font-size="8" fill="#27ca3f">✓</text>
+  </g>
+  
+  <!-- Blinking cursor -->
+  <rect x="155" y="42" width="2" height="12" fill="#00ff00">
+    <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+  </rect>
+</svg>
