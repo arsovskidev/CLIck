@@ -1,0 +1,45 @@
+title: CLIck - Lightning-Fast Terminal Task Manager
+description: A lightning-fast, terminal-based task manager for developers who live in the command line.
+url: "https://arsovskidev.github.io"
+baseurl: "/CLIck"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Exclude from processing
+exclude:
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .sass-cache
+  - .jekyll-cache
+  - .jekyll-metadata
+
+# Include files
+include:
+  - _pages
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+author: Filip Arsovski
+twitter:
+  username: arsovskidev
+social:
+  name: Filip Arsovski
+  links:
+    - https://github.com/arsovskidev

@@ -52,6 +52,10 @@ Homepage = "https://github.com/arsovskidev/CLIck"
 Repository = "https://github.com/arsovskidev/CLIck"
 Issues = "https://github.com/arsovskidev/CLIck/issues"
 
+[tool.setuptools]
+packages = ["src"]
+package-dir = {"" = "."}
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["src*"]
