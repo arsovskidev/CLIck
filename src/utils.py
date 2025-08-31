@@ -6,6 +6,8 @@ from rich.console import Console
 from rich.table import Table
 from rich.text import Text
 from rich import box
+from rich.panel import Panel
+from rich.align import Align
 
 from .models import Task, Priority
 
@@ -20,7 +22,6 @@ def parse_date(date_str: str) -> Optional[datetime]:
     date_str = date_str.lower().strip()
     now = datetime.now()
 
-    # Handle relative dates
     if date_str == "today":
         return now.replace(hour=23, minute=59, second=59, microsecond=0)
     elif date_str == "tomorrow":
@@ -32,7 +33,6 @@ def parse_date(date_str: str) -> Optional[datetime]:
             hour=23, minute=59, second=59, microsecond=0
         )
 
-    # Handle "in X days" format
     days_match = re.match(r"in (\d+) days?", date_str)
     if days_match:
         days = int(days_match.group(1))
@@ -40,7 +40,6 @@ def parse_date(date_str: str) -> Optional[datetime]:
             hour=23, minute=59, second=59, microsecond=0
         )
 
-    # Handle ISO date format (YYYY-MM-DD)
     try:
         return datetime.strptime(date_str, "%Y-%m-%d").replace(
             hour=23, minute=59, second=59, microsecond=0
@@ -48,7 +47,6 @@ def parse_date(date_str: str) -> Optional[datetime]:
     except ValueError:
         pass
 
-    # Handle MM/DD/YYYY format
     try:
         return datetime.strptime(date_str, "%m/%d/%Y").replace(
             hour=23, minute=59, second=59, microsecond=0
@@ -56,7 +54,6 @@ def parse_date(date_str: str) -> Optional[datetime]:
     except ValueError:
         pass
 
-    # Handle DD-MM-YYYY format
     try:
         return datetime.strptime(date_str, "%d-%m-%Y").replace(
             hour=23, minute=59, second=59, microsecond=0
@@ -69,60 +66,93 @@ def parse_date(date_str: str) -> Optional[datetime]:
 
 def format_task_list(tasks: List[Task]) -> None:
     if not tasks:
-        console.print("No tasks found", style="dim")
+        empty_panel = Panel(
+            Align.center("[dim white]No tasks found[/dim white]"),
+            title="[bold white]📋 Tasks[/bold white]",
+            border_style="white",
+            box=box.ROUNDED
+        )
+        console.print(empty_panel)
         return
 
-    table = Table(show_header=True, header_style="bold magenta")
-    table.add_column("ID", style="dim", width=4)
-    table.add_column("Status", width=8)
-    table.add_column("Priority", width=8)
-    table.add_column("Description", min_width=20)
-    table.add_column("Due Date", width=12)
-    table.add_column("Tags", width=15)
+    table = Table(
+        show_header=True, 
+        header_style="bold white",
+        border_style="white",
+        box=box.ROUNDED,
+        title="[bold white]📋 Your Tasks[/bold white]",
+        title_style="bold white"
+    )
+    table.add_column("ID", style="dim white", width=4, justify="center")
+    table.add_column("Status", width=10, justify="center")
+    table.add_column("Priority", width=10, justify="center")
+    table.add_column("Description", min_width=25, style="white")
+    table.add_column("Due Date", width=12, justify="center")
+    table.add_column("Tags", width=20, style="dim white")
 
     for task in tasks:
-        # Status column
         if task.completed:
-            status = Text("Done", style="green")
+            status = Text("✅ Done", style="white")
         elif task.is_overdue:
-            status = Text("Late", style="red")
+            status = Text("⚠️ Late", style="bright_white")
         else:
-            status = Text("Todo", style="yellow")
+            status = Text("📝 Todo", style="dim white")
 
-        # Priority column with colors
         priority_colors = {
-            Priority.HIGH: "red",
-            Priority.MEDIUM: "yellow",
-            Priority.LOW: "green",
+            Priority.HIGH: "bright_white",
+            Priority.MEDIUM: "white",
+            Priority.LOW: "dim white",
+        }
+        priority_icons = {
+            Priority.HIGH: "🔥",
+            Priority.MEDIUM: "⭐",
+            Priority.LOW: "💙",
         }
         priority_text = Text(
-            task.priority.value.title(), style=priority_colors[task.priority]
+            f"{priority_icons[task.priority]} {task.priority.value.title()}", 
+            style=priority_colors[task.priority]
         )
 
-        # Due date formatting
-        due_date_str = ""
+        due_date_text = ""
         if task.due_date:
             if task.due_date.date() == datetime.now().date():
-                due_date_str = "Today"
+                due_date_text = Text("📅 Today", style="bright_white")
             elif task.due_date.date() == (datetime.now() + timedelta(days=1)).date():
-                due_date_str = "Tomorrow"
+                due_date_text = Text("📅 Tomorrow", style="white")
             else:
-                due_date_str = task.due_date.strftime("%Y-%m-%d")
+                due_date_text = Text(f"📅 {task.due_date.strftime('%m-%d')}", style="dim white")
+        else:
+            due_date_text = Text("-", style="dim")
 
-        # Tags formatting
-        tags_str = ", ".join(task.tags) if task.tags else ""
+        if task.tags:
+            tags_text = Text(f"🏷️ {', '.join(task.tags)}", style="white")
+        else:
+            tags_text = Text("-", style="dim")
 
         table.add_row(
             str(task.id),
             status,
             priority_text,
             task.description,
-            due_date_str,
-            tags_str,
+            due_date_text,
+            tags_text,
         )
 
     console.print(table)
-    console.print(f"\nTotal: {len(tasks)} tasks")
+    
+    summary_text = f"[bold white]Total: {len(tasks)} tasks[/bold white]"
+    completed_count = sum(1 for task in tasks if task.completed)
+    pending_count = len(tasks) - completed_count
+    
+    if completed_count > 0 or pending_count > 0:
+        summary_text += f"\n[white]✅ Completed: {completed_count}[/white] | [dim white]📝 Pending: {pending_count}[/dim white]"
+    
+    summary_panel = Panel(
+        Align.center(summary_text),
+        border_style="white",
+        box=box.ROUNDED
+    )
+    console.print(summary_panel)
 
 
 def format_priority_color(priority: Priority) -> str:
@@ -136,3 +166,30 @@ def validate_priority(priority_str: str) -> bool:
         return True
     except ValueError:
         return False
+
+
+def print_success_message(message: str) -> None:
+    panel = Panel(
+        f"[bold white]✅ {message}[/bold white]",
+        border_style="white",
+        box=box.ROUNDED
+    )
+    console.print(panel)
+
+
+def print_error_message(message: str) -> None:
+    panel = Panel(
+        f"[bold white]❌ {message}[/bold white]",
+        border_style="white",
+        box=box.ROUNDED
+    )
+    console.print(panel)
+
+
+def print_info_message(message: str) -> None:
+    panel = Panel(
+        f"[bold white]ℹ️ {message}[/bold white]",
+        border_style="white",
+        box=box.ROUNDED
+    )
+    console.print(panel)

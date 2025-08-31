@@ -4,7 +4,7 @@ from datetime import datetime
 
 from .storage import TaskStorage
 from .models import Task, Priority
-from .utils import format_task_list, parse_date
+from .utils import format_task_list, parse_date, print_success_message, print_error_message
 
 
 @click.command()
@@ -33,7 +33,7 @@ def add_task(
     )
 
     task_id = storage.add_task(task)
-    print(f"Task added successfully with ID: {task_id}")
+    print_success_message(f"Task added successfully with ID: {task_id}")
 
     tasks = storage.get_tasks()
     format_task_list(tasks)
@@ -67,9 +67,9 @@ def list_tasks(
 def complete_task(task_id: int) -> None:
     storage = TaskStorage()
     if storage.complete_task(task_id):
-        print(f"Task {task_id} marked as completed!")
+        print_success_message(f"Task {task_id} marked as completed!")
     else:
-        print(f"Task {task_id} not found.")
+        print_error_message(f"Task {task_id} not found.")
 
     tasks = storage.get_tasks()
     format_task_list(tasks)
@@ -80,9 +80,9 @@ def complete_task(task_id: int) -> None:
 def delete_task(task_id: int) -> None:
     storage = TaskStorage()
     if storage.delete_task(task_id):
-        print(f"Task {task_id} deleted successfully!")
+        print_success_message(f"Task {task_id} deleted successfully!")
     else:
-        print(f"Task {task_id} not found.")
+        print_error_message(f"Task {task_id} not found.")
 
     tasks = storage.get_tasks()
     format_task_list(tasks)
@@ -93,7 +93,7 @@ def delete_task(task_id: int) -> None:
 def complete_all_tasks() -> None:
     storage = TaskStorage()
     count = storage.complete_all_tasks()
-    print(f"Completed {count} tasks!")
+    print_success_message(f"Completed {count} tasks!")
 
     tasks = storage.get_tasks()
     format_task_list(tasks)
@@ -104,7 +104,7 @@ def complete_all_tasks() -> None:
 def delete_all_tasks() -> None:
     storage = TaskStorage()
     count = storage.delete_all_tasks()
-    print(f"Deleted {count} tasks!")
+    print_success_message(f"Deleted {count} tasks!")
 
     tasks = storage.get_tasks()
     format_task_list(tasks)

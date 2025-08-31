@@ -16,13 +16,22 @@ def cli() -> None:
     pass
 
 
-# Register commands from commands.py
 cli.add_command(add_task, name="add")
+cli.add_command(add_task, name="a")
+
 cli.add_command(list_tasks, name="list")
+cli.add_command(list_tasks, name="l")
+
 cli.add_command(complete_task, name="complete")
+cli.add_command(complete_task, name="c")
+
 cli.add_command(delete_task, name="delete")
+cli.add_command(delete_task, name="d")
 cli.add_command(complete_all_tasks, name="complete-all")
+cli.add_command(complete_all_tasks, name="ca")
+
 cli.add_command(delete_all_tasks, name="delete-all")
+cli.add_command(delete_all_tasks, name="da")
 
 
 if __name__ == "__main__":
