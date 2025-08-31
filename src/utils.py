@@ -113,7 +113,6 @@ def format_task_list(tasks: List[Task]) -> None:
             style=priority_colors[task.priority],
         )
 
-        due_date_text = ""
         if task.due_date:
             if task.due_date.date() == datetime.now().date():
                 due_date_text = Text("📅 Today", style="bright_white")
