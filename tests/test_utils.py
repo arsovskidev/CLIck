@@ -20,8 +20,8 @@ def test_parse_date_relative():
 
 def test_parse_date_iso_format():
     """Test parsing ISO date format"""
-    date = parse_date("2024-01-15")
-    assert date.year == 2024
+    date = parse_date("2025-01-15")
+    assert date.year == 2025
     assert date.month == 1
     assert date.day == 15
 

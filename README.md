@@ -140,9 +140,9 @@ click delete 1
 CLIck supports flexible date parsing:
 - `today`, `tomorrow`, `yesterday`
 - `in 3 days`
-- `2024-01-15` (ISO format)
-- `01/15/2024` (US format)
-- `15-01-2024` (European format)
+- `2025-01-15` (ISO format)
+- `01/15/2025` (US format)
+- `15-01-2025` (European format)
 
 ## Development
 

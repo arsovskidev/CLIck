@@ -14,7 +14,7 @@ from .utils import (
 
 @click.command()
 @click.argument("description")
-@click.option("--due", help="Due date (e.g., tomorrow, 2024-01-15)")
+@click.option("--due", help="Due date (e.g., tomorrow, 2025-01-15)")
 @click.option(
     "--priority",
     type=click.Choice(["low", "medium", "high"]),
