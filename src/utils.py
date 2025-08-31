@@ -70,18 +70,18 @@ def format_task_list(tasks: List[Task]) -> None:
             Align.center("[dim white]No tasks found[/dim white]"),
             title="[bold white]📋 Tasks[/bold white]",
             border_style="white",
-            box=box.ROUNDED
+            box=box.ROUNDED,
         )
         console.print(empty_panel)
         return
 
     table = Table(
-        show_header=True, 
+        show_header=True,
         header_style="bold white",
         border_style="white",
         box=box.ROUNDED,
         title="[bold white]📋 Your Tasks[/bold white]",
-        title_style="bold white"
+        title_style="bold white",
     )
     table.add_column("ID", style="dim white", width=4, justify="center")
     table.add_column("Status", width=10, justify="center")
@@ -109,8 +109,8 @@ def format_task_list(tasks: List[Task]) -> None:
             Priority.LOW: "💙",
         }
         priority_text = Text(
-            f"{priority_icons[task.priority]} {task.priority.value.title()}", 
-            style=priority_colors[task.priority]
+            f"{priority_icons[task.priority]} {task.priority.value.title()}",
+            style=priority_colors[task.priority],
         )
 
         due_date_text = ""
@@ -120,7 +120,9 @@ def format_task_list(tasks: List[Task]) -> None:
             elif task.due_date.date() == (datetime.now() + timedelta(days=1)).date():
                 due_date_text = Text("📅 Tomorrow", style="white")
             else:
-                due_date_text = Text(f"📅 {task.due_date.strftime('%m-%d')}", style="dim white")
+                due_date_text = Text(
+                    f"📅 {task.due_date.strftime('%m-%d')}", style="dim white"
+                )
         else:
             due_date_text = Text("-", style="dim")
 
@@ -139,18 +141,16 @@ def format_task_list(tasks: List[Task]) -> None:
         )
 
     console.print(table)
-    
+
     summary_text = f"[bold white]Total: {len(tasks)} tasks[/bold white]"
     completed_count = sum(1 for task in tasks if task.completed)
     pending_count = len(tasks) - completed_count
-    
+
     if completed_count > 0 or pending_count > 0:
         summary_text += f"\n[white]✅ Completed: {completed_count}[/white] | [dim white]📝 Pending: {pending_count}[/dim white]"
-    
+
     summary_panel = Panel(
-        Align.center(summary_text),
-        border_style="white",
-        box=box.ROUNDED
+        Align.center(summary_text), border_style="white", box=box.ROUNDED
     )
     console.print(summary_panel)
 
@@ -170,26 +170,20 @@ def validate_priority(priority_str: str) -> bool:
 
 def print_success_message(message: str) -> None:
     panel = Panel(
-        f"[bold white]✅ {message}[/bold white]",
-        border_style="white",
-        box=box.ROUNDED
+        f"[bold white]✅ {message}[/bold white]", border_style="white", box=box.ROUNDED
     )
     console.print(panel)
 
 
 def print_error_message(message: str) -> None:
     panel = Panel(
-        f"[bold white]❌ {message}[/bold white]",
-        border_style="white",
-        box=box.ROUNDED
+        f"[bold white]❌ {message}[/bold white]", border_style="white", box=box.ROUNDED
     )
     console.print(panel)
 
 
 def print_info_message(message: str) -> None:
     panel = Panel(
-        f"[bold white]ℹ️ {message}[/bold white]",
-        border_style="white",
-        box=box.ROUNDED
+        f"[bold white]ℹ️ {message}[/bold white]", border_style="white", box=box.ROUNDED
     )
     console.print(panel)

@@ -4,7 +4,12 @@ from datetime import datetime
 
 from .storage import TaskStorage
 from .models import Task, Priority
-from .utils import format_task_list, parse_date, print_success_message, print_error_message
+from .utils import (
+    format_task_list,
+    parse_date,
+    print_success_message,
+    print_error_message,
+)
 
 
 @click.command()
