@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "click-tasks"
 version = "0.1.0"
-description = "A beautiful command-line task manager"
+description = "A lightning-fast, terminal-based task manager for developers who live in the command line. Create, organize, and track tasks without leaving your terminal. "
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "Your Name", email = "your.email@example.com"}
+    {name = "Filip Arsovski", email = "arsovskidev@gmail.com"}
 ]
 keywords = ["cli", "task-manager", "productivity", "todo"]
 classifiers = [
@@ -48,9 +48,9 @@ build = [
 click = "src.cli:cli"
 
 [project.urls]
-Homepage = "https://github.com/yourusername/click-tasks"
-Repository = "https://github.com/yourusername/click-tasks"
-Issues = "https://github.com/yourusername/click-tasks/issues"
+Homepage = "https://github.com/arsovskidev/CLIck"
+Repository = "https://github.com/arsovskidev/CLIck"
+Issues = "https://github.com/arsovskidev/CLIck/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]

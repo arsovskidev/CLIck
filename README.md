@@ -28,7 +28,7 @@ A lightning-fast, terminal-based task manager for developers who live in the com
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone git@github.com:arsovskidev/CLIck.git
 cd CLIck
 ```
 
